@@ -1,0 +1,29 @@
+# All dependencies for DevTools Helper
+# Run: pip install -r requirements-all.txt
+
+# Core dependencies
+click>=8.0.0
+watchdog>=3.0.0
+pyyaml>=6.0
+flask>=2.3.0
+jinja2>=3.1.0
+colorama>=0.4.6
+requests>=2.31.0
+pathspec>=0.11.0
+toml>=0.10.2; python_version < "3.11"
+
+# Development dependencies
+pytest>=7.0.0
+pytest-cov>=4.0.0
+pytest-mock>=3.10.0
+black>=23.0.0
+flake8>=6.0.0
+mypy>=1.0.0
+isort>=5.12.0
+build>=0.10.0
+twine>=4.0.0
+pre-commit>=3.0.0
+
+# Type stubs
+types-PyYAML>=6.0.0
+types-requests>=2.31.0

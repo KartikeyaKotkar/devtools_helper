@@ -1,0 +1,48 @@
+# Example configuration file for DevTools Helper
+# This demonstrates the configuration management capabilities
+
+app:
+  name: "My Development Project"
+  version: "1.0.0"
+  debug: true
+  environment: "development"
+
+server:
+  host: "0.0.0.0"
+  port: 8000
+  hot_reload: true
+  watch_directories:
+    - "src"
+    - "templates"
+    - "static"
+
+database:
+  url: "sqlite:///development.db"
+  echo: false
+  pool_size: 5
+
+logging:
+  level: "DEBUG"
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+  file: "app.log"
+
+development:
+  code_quality:
+    max_line_length: 88
+    enable_type_checking: true
+    enable_docstring_checks: true
+  
+  project_templates:
+    default: "webapp"
+    available:
+      - "basic"
+      - "webapp" 
+      - "cli"
+      - "data-science"
+      - "package"
+
+features:
+  project_generator: true
+  code_checker: true
+  dev_server: true
+  config_manager: true

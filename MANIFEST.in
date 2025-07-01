@@ -1,0 +1,8 @@
+include README.md
+include LICENSE
+include requirements.txt
+recursive-include devtools_helper/templates *
+recursive-include devtools_helper *.yaml *.json
+exclude tests/*
+exclude .github/*
+exclude .gitignore
