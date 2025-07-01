@@ -13,7 +13,7 @@ A comprehensive developer productivity toolkit for Python projects that combines
 
 ## 🚀 Installation
 
-### Option 1: From PyPI (Recommended) [WORK IN PROGRESS]
+### Option 1: From PyPI (Recommended) [NOT PUBLISHED YET]
 ```bash
 pip install devtools-helper
 ```
