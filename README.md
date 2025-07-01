@@ -233,13 +233,15 @@ Contributions are welcome! Please read our [Contributing Guide](CONTRIBUTING.md)
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
+<!--
 ## 🔗 Links
+
 
 - **PyPI**: https://pypi.org/project/devtools-helper/
 - **GitHub**: https://github.com/KartikeyaKotkar/devtools-helper
 - **Documentation**: https://devtools-helper.readthedocs.io/
 - **Issues**: https://github.com/KartikeyaKotkar/devtools-helper/issues
-
+-->
 ## 💡 Examples
 
 ### Creating a Web Application
