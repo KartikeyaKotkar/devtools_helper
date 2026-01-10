@@ -1,125 +1,108 @@
-name: CI/CD
+name: CI
 
 on:
   push:
-    branches: [ main, develop ]
+    branches: [main, develop]
   pull_request:
-    branches: [ main ]
-  release:
-    types: [ published ]
+    branches: [main]
 
 jobs:
   test-installation:
     runs-on: ${{ matrix.os }}
     strategy:
+      fail-fast: false
       matrix:
         os: [ubuntu-latest, windows-latest, macos-latest]
         python-version: ["3.8", "3.9", "3.10", "3.11", "3.12"]
 
     steps:
-    - uses: actions/checkout@v4
-    
-    - name: Set up Python ${{ matrix.python-version }}
-      uses: actions/setup-python@v4
-      with:
-        python-version: ${{ matrix.python-version }}
-    
-    - name: Test universal installation script
-      run: python install.py
-    
-    - name: Test installation verification
-      run: python test_installation.py
-    
-    - name: Test CLI commands
-      run: |
-        python -m devtools_helper.cli --help
-        python -m devtools_helper.cli templates
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: pip
+
+      - name: Test universal installation script
+        shell: bash
+        run: python install.py
+
+      - name: Test installation verification
+        shell: bash
+        run: python test_installation.py
+
+      - name: Test CLI commands
+        shell: bash
+        run: |
+          python -m devtools_helper.cli --help
+          python -m devtools_helper.cli templates
 
   test:
     runs-on: ${{ matrix.os }}
     strategy:
+      fail-fast: false
       matrix:
         os: [ubuntu-latest, windows-latest, macos-latest]
         python-version: ["3.8", "3.9", "3.10", "3.11", "3.12"]
 
     steps:
-    - uses: actions/checkout@v4
-    
-    - name: Set up Python ${{ matrix.python-version }}
-      uses: actions/setup-python@v4
-      with:
-        python-version: ${{ matrix.python-version }}
-    
-    - name: Install dependencies
-      run: |
-        python -m pip install --upgrade pip
-        pip install -e ".[dev,test]"
-    
-    - name: Lint with flake8
-      run: |
-        flake8 devtools_helper tests --max-line-length=88 --extend-ignore=E203,W503
-    
-    - name: Check code formatting with black
-      run: |
-        black --check devtools_helper tests
-    
-    - name: Type check with mypy
-      run: |
-        mypy devtools_helper
-    
-    - name: Test with pytest
-      run: |
-        pytest tests/ --cov=devtools_helper --cov-report=xml --cov-report=term-missing
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: pip
+
+      - name: Install dependencies
+        shell: bash
+        run: |
+          python -m pip install --upgrade pip
+          pip install -e ".[dev,test]"
+
+      - name: Lint with flake8
+        shell: bash
+        run: flake8 devtools_helper tests --max-line-length=88 --extend-ignore=E203,W503
+
+      - name: Check formatting with black
+        shell: bash
+        run: black --check devtools_helper tests
+
+      - name: Type check with mypy
+        shell: bash
+        run: mypy devtools_helper
+
+      - name: Run tests
+        shell: bash
+        run: pytest tests/ --cov=devtools_helper --cov-report=xml --cov-report=term-missing
 
   build:
     needs: test
     runs-on: ubuntu-latest
-    
-    steps:
-    - uses: actions/checkout@v4
-    
-    - name: Set up Python
-      uses: actions/setup-python@v4
-      with:
-        python-version: "3.11"
-    
-    - name: Install build dependencies
-      run: |
-        python -m pip install --upgrade pip
-        pip install build twine
-    
-    - name: Build package
-      run: python -m build
-    
-    - name: Check package
-      run: twine check dist/*
-    
-    - name: Upload build artifacts
-      uses: actions/upload-artifact@v3
-      with:
-        name: dist
-        path: dist/
 
-  publish:
-    needs: build
-    runs-on: ubuntu-latest
-    if: github.event_name == 'release' && github.event.action == 'published'
-    
     steps:
-    - uses: actions/checkout@v4
-    
-    - name: Set up Python
-      uses: actions/setup-python@v4
-      with:
-        python-version: "3.11"
-    
-    - name: Download build artifacts
-      uses: actions/download-artifact@v3
-      with:
-        name: dist
-        path: dist/
-    
-    - name: Publish to PyPI
-      uses: pypa/gh-action-pypi-publish@release/v1
-      with:
-        password: ${{ secrets.PYPI_API_TOKEN }}
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+
+      - name: Install build dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install build twine
+
+      - name: Build package
+        run: python -m build
+
+      - name: Check package
+        run: twine check dist/*
+
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: dist
+          path: dist/

@@ -38,6 +38,6 @@ echo.
 echo Available commands:
 echo   devtools --help           - Show CLI help
 echo   python -m pytest tests/   - Run tests
-echo   python simple_build.py    - Build package
+echo   python scripts/build_package.py    - Build package
 echo ============================================
 pause

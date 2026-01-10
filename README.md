@@ -1,15 +1,15 @@
 # DevTools Helper
 
-> **⚡ TL;DR**: `git clone https://github.com/KartikeyaKotkar/devtools-helper.git && cd devtools-helper && python install.py`
+> **⚡ TL;DR**: `git clone https://github.com/KartikeyaKotkar/devtools-helper.git && cd devtools-helper && python scripts/install_dev.py`
 
 A comprehensive developer productivity toolkit for Python projects that combines essential development utilities into one convenient package.
 
-## 🌟 Features
+##  Features
 
-- **📁 Project Structure Generator**: Quickly scaffold new Python projects with best practices
-- **🔍 Code Quality Checker**: Automated code analysis and quality reports
-- **⚙️ Configuration Manager**: Simplified configuration handling for your applications
-- **🔥 Development Server**: Hot-reload development server for rapid prototyping
+- ** Project Structure Generator**: Quickly scaffold new Python projects with best practices
+- ** Code Quality Checker**: Automated code analysis and quality reports
+- ** Configuration Manager**: Simplified configuration handling for your applications
+- ** Development Server**: Hot-reload development server for rapid prototyping
 
 ## 🚀 Installation
 
@@ -89,7 +89,7 @@ Available project templates:
 - **`data-science`**: Data science project with Jupyter notebooks and common libraries
 - **`package`**: PyPI package structure ready for distribution
 
-## ⚙️ Configuration
+##  Configuration
 
 DevTools Helper supports multiple configuration formats:
 - **YAML** (recommended)
@@ -115,7 +115,7 @@ database:
   pool_size: 10
 ```
 
-## 🛠️ CLI Commands
+##  CLI Commands
 
 ### Project Management
 ```bash
@@ -161,7 +161,7 @@ devtools serve --static-dir ./public
 devtools serve --command "python app.py" --watch src --watch templates
 ```
 
-## 🧪 Development
+##  Development
 
 ### Quick Start for Contributors
 
@@ -206,7 +206,7 @@ python -c "import subprocess; subprocess.run(['black', '--check', 'devtools_help
 python -c "import subprocess; subprocess.run(['flake8', 'devtools_helper'])"
 
 # Build package
-python simple_build.py
+python scripts/build_package.py
 ```
 
 ### Using Makefile (Linux/macOS)
@@ -220,16 +220,16 @@ make build         # Build package
 make clean         # Clean build artifacts
 ```
 
-## 📋 Requirements
+##  Requirements
 
 - Python 3.8 or higher
 - Operating Systems: Windows, macOS, Linux
 
-## 🤝 Contributing
+##  Contributing
 
 Contributions are welcome! Please read our [Contributing Guide](CONTRIBUTING.md) for details.
 
-## 📄 License
+##  License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
@@ -240,7 +240,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - **Documentation**: https://devtools-helper.readthedocs.io/
 - **Issues**: https://github.com/KartikeyaKotkar/devtools-helper/issues
 
-## 💡 Examples
+##  Examples
 
 ### Creating a Web Application
 ```bash
@@ -271,5 +271,3 @@ devtools serve --command "uvicorn main:app --reload"
 ```
 
 ---
-
-**Made with ❤️ for Python developers**

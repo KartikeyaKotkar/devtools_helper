@@ -7,13 +7,17 @@ import subprocess
 import sys
 from pathlib import Path
 
+# Enable UTF-8 output on Windows
+if sys.platform == "win32":
+    sys.stdout.reconfigure(encoding='utf-8')
+
 
 def main():
     print("🔍 DevTools Helper - Quick Validation")
     print("====================================")
     
     # Check if we're in the right place
-    required_files = ["pyproject.toml", "setup.py", "devtools_helper", "install.py"]
+    required_files = ["pyproject.toml", "setup.py", "devtools_helper", "scripts/install_dev.py"]
     missing_files = [f for f in required_files if not Path(f).exists()]
     
     if missing_files:
@@ -38,7 +42,7 @@ def main():
     except ImportError:
         print("📦 Package not installed yet")
         print("\n🚀 To install, run:")
-        print("   python install.py")
+        print("   python scripts/install_dev.py")
         return True
 
 
@@ -48,6 +52,6 @@ if __name__ == "__main__":
         sys.exit(1)
     
     print("\n✨ Repository is ready! Next steps:")
-    print("   1. Run: python install.py")
-    print("   2. Run: python test_installation.py") 
+    print("   1. Run: python scripts/install_dev.py")
+    print("   2. Run: python scripts/verify_install.py") 
     print("   3. Check: README.md for full documentation")

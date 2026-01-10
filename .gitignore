@@ -150,7 +150,7 @@ Thumbs.db
 .env.test.local
 .env.production.local
 
-# Build scripts (keep only simple_build.py)
+# Build scripts
 build_old.py
 
 # Test projects created during development

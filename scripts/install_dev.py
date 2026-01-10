@@ -9,6 +9,10 @@ import subprocess
 import platform
 from pathlib import Path
 
+# Enable UTF-8 output on Windows
+if sys.platform == "win32":
+    sys.stdout.reconfigure(encoding='utf-8')
+
 
 def run_command(command, description, check=True):
     """Run a command with nice output."""
@@ -104,7 +108,7 @@ def main():
     
     # Show additional commands
     print("\n🛠️  Available Commands:")
-    print("   python simple_build.py    - Build package")
+    print("   python scripts/build_package.py - Build package")
     print("   python -m pytest tests/   - Run tests")
     print("   python -m devtools_helper.cli --help - CLI help")
     

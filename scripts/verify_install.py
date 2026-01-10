@@ -5,6 +5,10 @@ Test script to verify DevTools Helper installation.
 import sys
 from pathlib import Path
 
+# Enable UTF-8 output on Windows
+if sys.platform == "win32":
+    sys.stdout.reconfigure(encoding='utf-8')
+
 
 def test_import():
     """Test if package can be imported."""
