@@ -2,12 +2,7 @@
 Project structure generator for creating well-structured Python projects.
 """
 
-import os
-import shutil
 from pathlib import Path
-from typing import Dict, Optional
-import yaml
-from jinja2 import Template
 
 
 class ProjectGenerator:

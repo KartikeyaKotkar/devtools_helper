@@ -1,24 +1,68 @@
-# DevTools Helper
+# DevTools Helper 🛠️
+
+<div align="center">
+
+[![CI](https://github.com/KartikeyaKotkar/devtools-helper/actions/workflows/ci.yml/badge.svg)](https://github.com/KartikeyaKotkar/devtools-helper/actions/workflows/ci.yml)
+[![CodeQL](https://github.com/KartikeyaKotkar/devtools-helper/actions/workflows/codeql.yml/badge.svg)](https://github.com/KartikeyaKotkar/devtools-helper/actions/workflows/codeql.yml)
+[![codecov](https://codecov.io/gh/KartikeyaKotkar/devtools-helper/branch/main/graph/badge.svg)](https://codecov.io/gh/KartikeyaKotkar/devtools-helper)
+[![PyPI version](https://badge.fury.io/py/devtools-helper.svg)](https://badge.fury.io/py/devtools-helper)
+[![Python Versions](https://img.shields.io/pypi/pyversions/devtools-helper.svg)](https://pypi.org/project/devtools-helper/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Downloads](https://pepy.tech/badge/devtools-helper)](https://pepy.tech/project/devtools-helper)
+[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
+[![pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit)](https://github.com/pre-commit/pre-commit)
+
+**A comprehensive developer productivity toolkit for Python projects**
+
+[Features](#-features) • [Installation](#-installation) • [Quick Start](#-quick-start) • [Documentation](#-documentation) • [Contributing](#-contributing)
+
+</div>
+
+---
 
 > **⚡ TL;DR**: `git clone https://github.com/KartikeyaKotkar/devtools-helper.git && cd devtools-helper && python scripts/install_dev.py`
 
-A comprehensive developer productivity toolkit for Python projects that combines essential development utilities into one convenient package.
+## ✨ Features
 
-##  Features
+<table>
+<tr>
+<td align="center" width="25%">
 
-- ** Project Structure Generator**: Quickly scaffold new Python projects with best practices
-- ** Code Quality Checker**: Automated code analysis and quality reports
-- ** Configuration Manager**: Simplified configuration handling for your applications
-- ** Development Server**: Hot-reload development server for rapid prototyping
+### 🏗️ Project Generator
+Quickly scaffold new Python projects with best practices and multiple templates
+
+</td>
+<td align="center" width="25%">
+
+### 🔍 Code Checker
+Automated code analysis, quality metrics, and maintainability scores
+
+</td>
+<td align="center" width="25%">
+
+### ⚙️ Config Manager
+Simplified configuration handling with YAML, JSON, TOML, and env support
+
+</td>
+<td align="center" width="25%">
+
+### 🔄 Dev Server
+Hot-reload development server for rapid prototyping and testing
+
+</td>
+</tr>
+</table>
 
 ## 🚀 Installation
 
 ### Option 1: From PyPI (Recommended)
+
 ```bash
 pip install devtools-helper
 ```
 
 ### Option 2: From GitHub (Latest Development)
+
 ```bash
 # Clone the repository
 git clone https://github.com/KartikeyaKotkar/devtools-helper.git
@@ -28,14 +72,12 @@ cd devtools-helper
 setup.bat
 
 # Quick setup (Linux/macOS)
-chmod +x setup.sh
-./setup.sh
+chmod +x setup.sh && ./setup.sh
 
-# Manual setup
+# Or manual setup
 python -m venv venv
-# Windows: venv\Scripts\activate
-# Linux/macOS: source venv/bin/activate
-pip install -e .
+source venv/bin/activate  # Windows: venv\Scripts\activate
+pip install -e ".[dev]"
 ```
 
 ## 📖 Quick Start
@@ -82,23 +124,23 @@ server.start()
 
 ## 🎯 Project Templates
 
-Available project templates:
-- **`basic`**: Basic Python package structure
-- **`webapp`**: Flask/FastAPI web application with templates and static files
-- **`cli`**: Command-line application with Click framework
-- **`data-science`**: Data science project with Jupyter notebooks and common libraries
-- **`package`**: PyPI package structure ready for distribution
+| Template | Description | Key Features |
+|----------|-------------|--------------|
+| 📦 `basic` | Basic Python package structure | setup.py, README, tests |
+| 🌐 `webapp` | Flask/FastAPI web application | Templates, static files, routing |
+| 💻 `cli` | Command-line application | Click framework, argument parsing |
+| 📊 `data-science` | Data science project | Jupyter notebooks, common libraries |
+| 📚 `package` | PyPI package structure | Full packaging, CI/CD ready |
 
-##  Configuration
+## ⚙️ Configuration
 
 DevTools Helper supports multiple configuration formats:
-- **YAML** (recommended)
-- **JSON**
-- **TOML**
-- **Environment variables**
 
-### Example Configuration
+<table>
+<tr>
+<td>
 
+**YAML** (Recommended)
 ```yaml
 app:
   name: "My Application"
@@ -109,15 +151,43 @@ server:
   host: "localhost"
   port: 8000
   hot_reload: true
-
-database:
-  url: "sqlite:///app.db"
-  pool_size: 10
 ```
 
-##  CLI Commands
+</td>
+<td>
 
-### Project Management
+**JSON**
+```json
+{
+  "app": {
+    "name": "My Application",
+    "version": "1.0.0"
+  },
+  "server": {
+    "port": 8000
+  }
+}
+```
+
+</td>
+<td>
+
+**Environment Variables**
+```bash
+export APP_NAME="My App"
+export APP_DEBUG="true"
+export DB_PORT="5432"
+```
+
+</td>
+</tr>
+</table>
+
+## 🖥️ CLI Commands
+
+<details>
+<summary><b>📁 Project Management</b></summary>
+
 ```bash
 # Create new project
 devtools create-project myapp --template webapp
@@ -128,8 +198,11 @@ devtools templates
 # Get project information
 devtools info ./myproject
 ```
+</details>
 
-### Code Quality
+<details>
+<summary><b>🔍 Code Quality</b></summary>
+
 ```bash
 # Analyze code quality
 devtools check-quality ./src
@@ -137,8 +210,11 @@ devtools check-quality ./src
 # Generate JSON report
 devtools check-quality ./src --format json --output report.json
 ```
+</details>
 
-### Configuration
+<details>
+<summary><b>⚙️ Configuration</b></summary>
+
 ```bash
 # Initialize config file
 devtools init-config --type web --format yaml
@@ -148,8 +224,11 @@ devtools config config.yaml app.name "My App"
 devtools config config.yaml app.debug true --type bool
 devtools config config.yaml database.password --delete
 ```
+</details>
 
-### Development Server
+<details>
+<summary><b>🔄 Development Server</b></summary>
+
 ```bash
 # Start development server
 devtools serve --port 8000
@@ -160,8 +239,21 @@ devtools serve --static-dir ./public
 # Run custom command with hot reload
 devtools serve --command "python app.py" --watch src --watch templates
 ```
+</details>
 
-##  Development
+## 📚 Documentation
+
+| Document | Description |
+|----------|-------------|
+| [📖 README](README.md) | This file - overview and quick start |
+| [🏗️ ARCHITECTURE](ARCHITECTURE.md) | System design and component overview |
+| [📋 CHANGELOG](CHANGELOG.md) | Version history and changes |
+| [🤝 CONTRIBUTING](CONTRIBUTING.md) | Contribution guidelines |
+| [🔒 SECURITY](SECURITY.md) | Security policy and vulnerability reporting |
+| [📜 LICENSE](LICENSE) | MIT License |
+| [🚀 QUICKSTART](QUICKSTART.md) | Detailed getting started guide |
+
+## 🛠️ Development
 
 ### Quick Start for Contributors
 
@@ -176,37 +268,26 @@ setup.bat
 ```bash
 git clone https://github.com/KartikeyaKotkar/devtools-helper.git
 cd devtools-helper
-chmod +x setup.sh
-./setup.sh
+chmod +x setup.sh && ./setup.sh
 ```
 
-### Manual Development Setup
+### Development Commands
+
 ```bash
-# Clone the repository
-git clone https://github.com/KartikeyaKotkar/devtools-helper.git
-cd devtools-helper
+# Run tests with coverage
+pytest tests/ --cov=devtools_helper --cov-report=html
 
-# Create virtual environment
-python -m venv venv
+# Format code
+black devtools_helper tests
 
-# Activate virtual environment
-# Windows:
-venv\Scripts\activate
-# Linux/macOS:
-source venv/bin/activate
+# Lint code
+flake8 devtools_helper tests
 
-# Install in development mode with all dependencies
-pip install -e ".[dev,test,docs]"
+# Type checking
+mypy devtools_helper
 
-# Run tests
-python -m pytest tests/
-
-# Check code quality
-python -c "import subprocess; subprocess.run(['black', '--check', 'devtools_helper'])"
-python -c "import subprocess; subprocess.run(['flake8', 'devtools_helper'])"
-
-# Build package
-python scripts/build_package.py
+# All quality checks
+pre-commit run --all-files
 ```
 
 ### Using Makefile (Linux/macOS)
@@ -220,29 +301,37 @@ make build         # Build package
 make clean         # Clean build artifacts
 ```
 
-##  Requirements
+## 📋 Requirements
 
-- Python 3.8 or higher
-- Operating Systems: Windows, macOS, Linux
+- **Python**: 3.8, 3.9, 3.10, 3.11, 3.12
+- **Operating Systems**: Windows, macOS, Linux
 
-##  Contributing
+## 📊 Code Quality Metrics
 
-Contributions are welcome! Please read our [Contributing Guide](CONTRIBUTING.md) for details.
+| Metric | Status |
+|--------|--------|
+| Test Coverage | [![codecov](https://codecov.io/gh/KartikeyaKotkar/devtools-helper/branch/main/graph/badge.svg)](https://codecov.io/gh/KartikeyaKotkar/devtools-helper) |
+| Code Style | [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black) |
+| Type Checking | MyPy strict mode |
+| Security | CodeQL scanning |
 
-##  License
+## 🤝 Contributing
+
+Contributions are welcome! Please read our [Contributing Guide](CONTRIBUTING.md) for details on:
+
+- Setting up your development environment
+- Code standards and best practices
+- Submitting pull requests
+- Reporting bugs and requesting features
+
+## 📜 License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## 🔗 Links
-
-- **PyPI**: https://pypi.org/project/devtools-helper/
-- **GitHub**: https://github.com/KartikeyaKotkar/devtools-helper
-- **Documentation**: https://devtools-helper.readthedocs.io/
-- **Issues**: https://github.com/KartikeyaKotkar/devtools-helper/issues
-
-##  Examples
+## 💡 Examples
 
 ### Creating a Web Application
+
 ```bash
 devtools create-project my-webapp --template webapp
 cd my-webapp
@@ -251,6 +340,7 @@ devtools serve --command "python -m my_webapp.app"
 ```
 
 ### Setting Up Data Science Project
+
 ```bash
 devtools create-project data-analysis --template data-science
 cd data-analysis
@@ -259,6 +349,7 @@ jupyter notebook notebooks/
 ```
 
 ### Quality Check Pipeline
+
 ```bash
 # Check code quality
 devtools check-quality ./src --format json --output quality.json
@@ -269,5 +360,3 @@ devtools init-config --type api
 # Start with hot reload
 devtools serve --command "uvicorn main:app --reload"
 ```
-
----

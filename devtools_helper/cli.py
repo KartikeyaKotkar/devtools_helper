@@ -2,22 +2,22 @@
 Command-line interface for DevTools Helper.
 """
 
-import click
 import sys
 from pathlib import Path
 from typing import Optional
 
-from .project_generator import ProjectGenerator
+import click
+
 from .code_checker import CodeChecker
 from .config_manager import ConfigManager
 from .dev_server import DevServer, ProjectRunner
+from .project_generator import ProjectGenerator
 
 
 @click.group()
 @click.version_option(version="0.1.0", prog_name="devtools")
 def cli():
     """DevTools Helper - A comprehensive developer productivity toolkit."""
-    pass
 
 
 @cli.command()
@@ -37,25 +37,24 @@ def create_project(name: str, template: str, output: str):
         success = generator.create_project(name, template, output)
 
         if success:
-            click.echo(f"✅ Project '{name}' created successfully!")
-            click.echo(f"📁 Location: {Path(output) / name}")
+            click.echo(f"Project '{name}' created successfully.")
+            click.echo(f"Location: {Path(output) / name}")
 
-            # Show next steps
-            click.echo("\n🚀 Next steps:")
-            click.echo(f"   cd {name}")
+            click.echo("\nNext steps:")
+            click.echo(f"  cd {name}")
 
             if template == "webapp":
-                click.echo("   pip install -r requirements.txt")
-                click.echo("   python -m your_app.app")
+                click.echo("  pip install -r requirements.txt")
+                click.echo("  python -m your_app.app")
             elif template == "package":
-                click.echo("   pip install -e .")
-                click.echo("   python setup.py test")
+                click.echo("  pip install -e .")
+                click.echo("  python setup.py test")
             else:
-                click.echo("   pip install -r requirements.txt")
-                click.echo("   # Start coding!")
+                click.echo("  pip install -r requirements.txt")
+                click.echo("  Start coding.")
 
-    except Exception as e:
-        click.echo(f"❌ Error creating project: {e}", err=True)
+    except Exception as exc:
+        click.echo(f"Error creating project: {exc}", err=True)
         sys.exit(1)
 
 
@@ -73,30 +72,29 @@ def check_quality(path: str, format: str, output: Optional[str]):
     """Check code quality and generate reports."""
     try:
         checker = CodeChecker()
-        click.echo(f"🔍 Analyzing code quality in: {path}")
+        click.echo(f"Analyzing code quality in: {path}")
 
         report = checker.analyze(path)
 
         if format == "console":
             checker.print_report(report)
-        elif format == "json":
+        else:
             import json
 
             json_report = json.dumps(report, indent=2)
 
             if output:
-                with open(output, "w") as f:
-                    f.write(json_report)
-                click.echo(f"📄 Report saved to: {output}")
+                with open(output, "w", encoding="utf-8") as file:
+                    file.write(json_report)
+                click.echo(f"Report saved to: {output}")
             else:
                 click.echo(json_report)
 
-        # Exit with error code if there are serious issues
         if report["summary"]["errors"] > 0:
             sys.exit(1)
 
-    except Exception as e:
-        click.echo(f"❌ Error checking code quality: {e}", err=True)
+    except Exception as exc:
+        click.echo(f"Error checking code quality: {exc}", err=True)
         sys.exit(1)
 
 
@@ -121,30 +119,26 @@ def init_config(config_type: str, format: str, output: Optional[str]):
     """Initialize configuration file from template."""
     try:
         config = ConfigManager()
-        template = config.create_template(config_type)
+        config.create_template(config_type)
 
-        # Determine output file
         if not output:
-            extensions = {"yaml": "yaml", "json": "json", "toml": "toml"}
-            output = f"config.{extensions[format]}"
+            output = f"config.{format}"
 
-        # Save configuration
         config.config_path = Path(output)
         config.format = format
         config.save()
 
-        click.echo(f"✅ Configuration file created: {output}")
-        click.echo(f"📋 Template type: {config_type}")
-        click.echo(f"📝 Format: {format}")
+        click.echo(f"Configuration file created: {output}")
+        click.echo(f"Template type: {config_type}")
+        click.echo(f"Format: {format}")
 
-        # Show sample usage
-        click.echo("\n💡 Usage example:")
-        click.echo("   from devtools_helper import ConfigManager")
-        click.echo(f"   config = ConfigManager('{output}')")
-        click.echo("   print(config.get('app.name'))")
+        click.echo("\nUsage example:")
+        click.echo("  from devtools_helper import ConfigManager")
+        click.echo(f"  config = ConfigManager('{output}')")
+        click.echo("  print(config.get('app.name'))")
 
-    except Exception as e:
-        click.echo(f"❌ Error creating configuration: {e}", err=True)
+    except Exception as exc:
+        click.echo(f"Error creating configuration: {exc}", err=True)
         sys.exit(1)
 
 
@@ -165,7 +159,6 @@ def serve(
 ):
     """Start development server with hot reload."""
     try:
-        # Auto-detect project type if no command specified
         if not command and not static_dir:
             project_type = ProjectRunner.detect_project_type()
             command = ProjectRunner.get_run_command(project_type)
@@ -173,12 +166,9 @@ def serve(
             if not command:
                 static_dir = "."
 
-            click.echo(f"🔍 Detected project type: {project_type}")
+            click.echo(f"Detected project type: {project_type}")
 
-        # Set up watch directories
         watch_dirs = list(watch) if watch else ["."]
-
-        # Create and start server
         server = DevServer(
             port=port,
             host=host,
@@ -191,9 +181,9 @@ def serve(
         server.start()
 
     except KeyboardInterrupt:
-        click.echo("\n👋 Server stopped by user")
-    except Exception as e:
-        click.echo(f"❌ Error starting server: {e}", err=True)
+        click.echo("Server stopped by user.")
+    except Exception as exc:
+        click.echo(f"Error starting server: {exc}", err=True)
         sys.exit(1)
 
 
@@ -212,18 +202,17 @@ def serve(
 def config(config_file: str, key: str, value: Optional[str], delete: bool, type: str):
     """Manage configuration values."""
     try:
-        config_manager = ConfigManager(config_file)
+        manager = ConfigManager(config_file)
 
         if delete:
-            if config_manager.delete(key):
-                click.echo(f"✅ Deleted key: {key}")
-                config_manager.save()
+            if manager.delete(key):
+                manager.save()
+                click.echo(f"Deleted key: {key}")
             else:
-                click.echo(f"❌ Key not found: {key}")
+                click.echo(f"Key not found: {key}")
                 sys.exit(1)
 
         elif value is not None:
-            # Convert value to appropriate type
             if type == "int":
                 value = int(value)
             elif type == "float":
@@ -231,21 +220,20 @@ def config(config_file: str, key: str, value: Optional[str], delete: bool, type:
             elif type == "bool":
                 value = value.lower() in ("true", "yes", "1", "on")
 
-            config_manager.set(key, value)
-            config_manager.save()
-            click.echo(f"✅ Set {key} = {value}")
+            manager.set(key, value)
+            manager.save()
+            click.echo(f"Set {key} = {value}")
 
         else:
-            # Get value
-            result = config_manager.get(key)
+            result = manager.get(key)
             if result is not None:
                 click.echo(f"{key} = {result}")
             else:
-                click.echo(f"❌ Key not found: {key}")
+                click.echo(f"Key not found: {key}")
                 sys.exit(1)
 
-    except Exception as e:
-        click.echo(f"❌ Error managing configuration: {e}", err=True)
+    except Exception as exc:
+        click.echo(f"Error managing configuration: {exc}", err=True)
         sys.exit(1)
 
 
@@ -256,27 +244,27 @@ def templates():
         generator = ProjectGenerator()
         available_templates = generator.list_templates()
 
-        click.echo("📋 Available Project Templates:")
+        click.echo("Available project templates:")
         click.echo("=" * 35)
 
-        template_descriptions = {
+        descriptions = {
             "basic": "Basic Python package structure",
             "webapp": "Flask/FastAPI web application",
             "cli": "Command-line application",
-            "data-science": "Data science project with Jupyter notebooks",
-            "package": "PyPI package structure",
+            "data-science": "Data science project with notebooks",
+            "package": "Python package structure",
         }
 
         for template in available_templates:
-            description = template_descriptions.get(template, "No description")
-            click.echo(f"  📁 {template:<15} - {description}")
+            description = descriptions.get(template, "No description")
+            click.echo(f"  {template:<15} - {description}")
 
         click.echo(
-            f"\n💡 Usage: devtools create-project my-project --template <template>"
+            "\nUsage: devtools create-project my-project --template <template>"
         )
 
-    except Exception as e:
-        click.echo(f"❌ Error listing templates: {e}", err=True)
+    except Exception as exc:
+        click.echo(f"Error listing templates: {exc}", err=True)
         sys.exit(1)
 
 
@@ -288,22 +276,19 @@ def info(path: str):
         path_obj = Path(path)
 
         if not path_obj.exists():
-            click.echo(f"❌ Path does not exist: {path}")
+            click.echo(f"Path does not exist: {path}")
             sys.exit(1)
 
-        click.echo(f"📊 Project Information: {path_obj.absolute()}")
+        click.echo(f"Project information: {path_obj.resolve()}")
         click.echo("=" * 50)
 
-        # Detect project type
         project_type = ProjectRunner.detect_project_type(path)
-        click.echo(f"🔍 Project Type: {project_type}")
+        click.echo(f"Project type: {project_type}")
 
-        # Count files
         python_files = list(path_obj.rglob("*.py"))
         if python_files:
-            click.echo(f"🐍 Python Files: {len(python_files)}")
+            click.echo(f"Python files: {len(python_files)}")
 
-        # Check for common files
         common_files = [
             "requirements.txt",
             "setup.py",
@@ -313,39 +298,31 @@ def info(path: str):
             "Dockerfile",
         ]
 
-        existing_files = []
-        for file in common_files:
-            if (path_obj / file).exists():
-                existing_files.append(file)
+        found = [f for f in common_files if (path_obj / f).exists()]
+        if found:
+            click.echo(f"Found: {', '.join(found)}")
 
-        if existing_files:
-            click.echo(f"📄 Found: {', '.join(existing_files)}")
-
-        # Suggestions
         suggestions = []
 
-        if not (path_obj / "requirements.txt").exists() and python_files:
-            suggestions.append("Create requirements.txt file")
-
+        if python_files and not (path_obj / "requirements.txt").exists():
+            suggestions.append("Create requirements.txt")
         if not (path_obj / "README.md").exists():
-            suggestions.append("Add README.md documentation")
-
+            suggestions.append("Add README.md")
         if not (path_obj / ".gitignore").exists():
-            suggestions.append("Add .gitignore file")
+            suggestions.append("Add .gitignore")
 
         if suggestions:
-            click.echo(f"\n💡 Suggestions:")
+            click.echo("\nSuggestions:")
             for suggestion in suggestions:
-                click.echo(f"   • {suggestion}")
+                click.echo(f"  - {suggestion}")
 
-        # Show available commands
-        click.echo(f"\n🛠️  Available Commands:")
-        click.echo(f"   devtools check-quality {path}")
-        click.echo(f"   devtools serve --port 8000")
-        click.echo(f"   devtools init-config --type web")
+        click.echo("\nAvailable commands:")
+        click.echo(f"  devtools check-quality {path}")
+        click.echo("  devtools serve --port 8000")
+        click.echo("  devtools init-config --type web")
 
-    except Exception as e:
-        click.echo(f"❌ Error getting project info: {e}", err=True)
+    except Exception as exc:
+        click.echo(f"Error getting project info: {exc}", err=True)
         sys.exit(1)
 
 

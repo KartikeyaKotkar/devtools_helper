@@ -3,12 +3,9 @@ Code quality checker for analyzing Python code and providing quality reports.
 """
 
 import ast
-import os
 import re
-import subprocess
 from pathlib import Path
-from typing import Dict, List, Optional, Any
-import json
+from typing import Any, Dict, List
 
 
 class CodeChecker:
@@ -100,8 +97,7 @@ class CodeChecker:
             )
 
     def _check_line_length(self, content: str, file_path: Path):
-        """Check for lines that are too long."""
-        max_length = 88  # Black default
+        max_length = 88
         lines = content.splitlines()
 
         for i, line in enumerate(lines, 1):

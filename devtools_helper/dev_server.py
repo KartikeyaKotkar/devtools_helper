@@ -2,17 +2,17 @@
 Development server with hot reload capabilities.
 """
 
-import os
-import time
-import threading
-import subprocess
-from pathlib import Path
-from typing import Optional, List, Callable, Dict, Any
-from watchdog.observers import Observer
-from watchdog.events import FileSystemEventHandler
 import http.server
+import os
 import socketserver
-from urllib.parse import urlparse
+import subprocess
+import threading
+import time
+from pathlib import Path
+from typing import Callable, List, Optional
+
+from watchdog.events import FileSystemEventHandler
+from watchdog.observers import Observer
 
 
 class DevServer:
@@ -356,12 +356,10 @@ class LiveReloadServer:
         """Start the live reload server."""
         # This would implement WebSocket server for live reload
         # For now, we'll use file watching approach
-        pass
 
     def reload(self):
         """Trigger reload for all connected clients."""
         # Send reload signal to all connected clients
-        pass
 
 
 class ProjectRunner:
@@ -404,7 +402,7 @@ class ProjectRunner:
     @staticmethod
     def get_watch_dirs(project_type: str, path: str = ".") -> List[str]:
         """Get directories to watch for different project types."""
-        base_dirs = [path]
+        [path]
 
         project_dirs = {
             "django": [".", "templates", "static"],

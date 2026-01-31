@@ -2,12 +2,13 @@
 Tests for DevTools Helper package.
 """
 
-import pytest
-import tempfile
 import shutil
+import tempfile
 from pathlib import Path
 
-from devtools_helper import ProjectGenerator, CodeChecker, ConfigManager
+import pytest
+
+from devtools_helper import CodeChecker, ConfigManager, ProjectGenerator
 
 
 class TestProjectGenerator:

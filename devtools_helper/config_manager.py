@@ -4,9 +4,10 @@ Configuration manager for handling various configuration formats.
 
 import json
 import os
-import yaml
 from pathlib import Path
 from typing import Any, Dict, List, Optional, Union
+
+import yaml
 
 try:
     import toml
