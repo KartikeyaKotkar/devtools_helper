@@ -3,8 +3,8 @@ DevTools Helper - A comprehensive developer productivity toolkit for Python proj
 """
 
 __version__ = "0.1.0"
-__author__ = "Your Name"
-__email__ = "your.email@example.com"
+__author__ = "Kartikeya Kotkar"
+__email__ = "null"
 
 from .code_checker import CodeChecker
 from .config_manager import ConfigManager

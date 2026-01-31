@@ -6,19 +6,19 @@
 ```bash
 git clone https://github.com/KartikeyaKotkar/devtools-helper.git
 cd devtools-helper
-python install.py
+python scripts/install_dev.py
 ```
 
 ### Linux/macOS
 ```bash
 git clone https://github.com/KartikeyaKotkar/devtools-helper.git
 cd devtools-helper
-python3 install.py
+python3 scripts/install_dev.py
 ```
 
 ## ✅ That's it! 
 
-The `install.py` script will:
+The `scripts/install_dev.py` script will:
 - ✅ Check Python version (3.8+)
 - ✅ Create virtual environment
 - ✅ Install all dependencies
@@ -36,10 +36,10 @@ venv\Scripts\activate
 source venv/bin/activate
 
 # Test CLI
-python -m devtools_helper.cli --help
+devtools --help
 
 # Create a test project
-python -m devtools_helper.cli create-project test-app --template basic
+devtools create-project test-app --template basic
 ```
 
 ## 📚 Full Documentation

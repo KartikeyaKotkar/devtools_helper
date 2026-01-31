@@ -10,7 +10,7 @@ readme = "README.md"
 requires-python = ">=3.8"
 license = {text = "MIT"}
 authors = [
-    {name = "DevTools Helper Contributors", email = "devtools-helper@example.com"},
+    {name = "Kartikeya Kotkar", email = "kartikeya.kotkar@example.com"},
 ]
 keywords = ["development", "tools", "productivity", "python", "cli"]
 classifiers = [
@@ -143,3 +143,8 @@ exclude_lines = [
     "class .*\\bProtocol\\):",
     "@(abc\\.)?abstractmethod",
 ]
+
+[tool.bandit]
+exclude_dirs = ["tests", "venv", ".venv", "build", "dist"]
+skips = ["B101"] # Skip assert checks in tests or if intended
+

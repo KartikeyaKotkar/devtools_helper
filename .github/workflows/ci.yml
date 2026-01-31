@@ -13,6 +13,7 @@ env:
 
 jobs:
   test-installation:
+    name: Test Installation (${{ matrix.os }}, ${{ matrix.python-version }})
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
@@ -31,11 +32,11 @@ jobs:
 
       - name: Test universal installation script
         shell: bash
-        run: python install.py
+        run: python scripts/install_dev.py
 
       - name: Test installation verification
         shell: bash
-        run: python test_installation.py
+        run: python scripts/verify_install.py
 
       - name: Test CLI commands
         shell: bash
@@ -44,6 +45,7 @@ jobs:
           python -m devtools_helper.cli templates
 
   test:
+    name: Test (${{ matrix.os }}, ${{ matrix.python-version }})
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
@@ -72,7 +74,6 @@ jobs:
               --max-line-length=100 \
               --extend-ignore=E203,W503,E501,W293,F401,F841,F541
 
-
       - name: Check formatting with black
         shell: bash
         run: black --check devtools_helper tests
@@ -81,7 +82,7 @@ jobs:
         shell: bash
         run: mypy devtools_helper
 
-      - name: Run tests
+      - name: Run tests with coverage
         shell: bash
         run: pytest tests/ --cov=devtools_helper --cov-report=xml --cov-report=term-missing
 
@@ -96,6 +97,7 @@ jobs:
           token: ${{ secrets.CODECOV_TOKEN }}
 
   build:
+    name: Build Package
     needs: test
     runs-on: ubuntu-latest
 
@@ -124,18 +126,9 @@ jobs:
         with:
           name: dist
           path: dist/
+          retention-days: 5
 
-  publish:
-    name: Publish to PyPI
-    needs: build
-    runs-on: ubuntu-latest
-    if: startsWith(github.ref, 'refs/tags/v')
-    environment:
-      name: pypi
-      url: https://pypi.org/p/devtools-helper
-
-    permissions:
-      id-token: write
+  
 
     steps:
       - name: Download artifacts
@@ -144,7 +137,4 @@ jobs:
           name: dist
           path: dist/
 
-      - name: Publish to PyPI
-        uses: pypa/gh-action-pypi-publish@release/v1
-        with:
-          print-hash: true
+     
